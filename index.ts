@@ -67,8 +67,7 @@ function explode(x: number, y: number, type: Tile) {
 
 function move(x: number, y: number) {
   if (
-    map[playery + y][playerx + x] === Tile.AIR ||
-    map[playery + y][playerx + x] === Tile.FIRE
+    [Tile.AIR,Tile.FIRE].indexOf(map[playery + y][playerx + x])!=-1
   ) {
     playery += y;
     playerx += x;
@@ -98,11 +97,11 @@ function update() {
   }
 
   if (
-    map[playery][playerx] === Tile.FIRE ||
-    map[playery][playerx] === Tile.MONSTER_DOWN ||
-    map[playery][playerx] === Tile.MONSTER_UP ||
-    map[playery][playerx] === Tile.MONSTER_LEFT ||
-    map[playery][playerx] === Tile.MONSTER_RIGHT
+    [Tile.FIRE,
+    Tile.MONSTER_DOWN,
+    Tile.MONSTER_UP,
+    Tile.MONSTER_LEFT,
+    Tile.MONSTER_RIGHT].indexOf(map[playery][playerx])!=-1
   )
     gameOver = true;
 
@@ -177,10 +176,10 @@ function draw() {
       else if (map[y][x] === Tile.EXTRA_BOMB) g.fillStyle = "#00cc00";
       else if (map[y][x] === Tile.FIRE) g.fillStyle = "#ffcc00";
       else if (
-        map[y][x] === Tile.MONSTER_UP ||
-        map[y][x] === Tile.MONSTER_LEFT ||
-        map[y][x] === Tile.MONSTER_RIGHT ||
-        map[y][x] === Tile.MONSTER_DOWN
+        [Tile.MONSTER_UP,
+        Tile.MONSTER_LEFT,
+        Tile.MONSTER_RIGHT,
+        Tile.MONSTER_DOWN].indexOf(map[y][x])!=-1
       )
         g.fillStyle = "#cc00cc";
       else if (map[y][x] === Tile.BOMB) g.fillStyle = "#770000";
@@ -217,9 +216,9 @@ const UP_KEY = "ArrowUp";
 const RIGHT_KEY = "ArrowRight";
 const DOWN_KEY = "ArrowDown";
 window.addEventListener("keydown", (e) => {
-  if (e.key === LEFT_KEY || e.key === "a") inputs.push(Input.LEFT);
-  else if (e.key === UP_KEY || e.key === "w") inputs.push(Input.UP);
-  else if (e.key === RIGHT_KEY || e.key === "d") inputs.push(Input.RIGHT);
-  else if (e.key === DOWN_KEY || e.key === "s") inputs.push(Input.DOWN);
+  if (["a",LEFT_KEY].indexOf(e.key)==-1) inputs.push(Input.LEFT);
+  else if (["w",UP_KEY].indexOf(e.key)==-1) inputs.push(Input.UP);
+  else if (["d",RIGHT_KEY].indexOf(e.key)==-1) inputs.push(Input.RIGHT);
+  else if (["s",DOWN_KEY].indexOf(e.key)==-1) inputs.push(Input.DOWN);
   else if (e.key === " ") inputs.push(Input.PLACE);
 });
